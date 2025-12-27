@@ -1,0 +1,10 @@
+{
+    "name": "Proxy Demo",
+    "dockerComposeFile": "../proxy/docker-compose.yml",
+    "service": "hello",
+    "workspaceFolder": "/workspace",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "remoteUser": "root"
+}
