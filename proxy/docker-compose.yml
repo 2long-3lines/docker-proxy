@@ -1,0 +1,43 @@
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs:ro
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+    networks:
+      - shared-net
+    restart: always
+
+  # acme-companion:
+  #   image: nginxproxy/acme-companion
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - ./certs:/etc/nginx/certs
+  #     - ./vhost:/etc/nginx/vhost.d
+  #     - ./html:/usr/share/nginx/html
+  #     - ./acme:/etc/acme.sh
+  #   environment:
+  #     - DEFAULT_EMAIL=2long.3lines@gmail.com
+  #   depends_on:
+  #     - nginx-proxy
+  #   networks:
+  #     - shared-net
+  #   restart: always
+
+  hello:
+    image: nginxdemos/hello:plain-text
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PATH=/hello/
+      - LETSENCRYPT_HOST=localhost
+    networks:
+      - shared-net
+
+networks:
+  shared-net:
+    name: shared-net
