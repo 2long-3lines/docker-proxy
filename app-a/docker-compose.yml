@@ -1,0 +1,12 @@
+services:
+  app-a:
+    image: nginxdemos/hello:plain-text
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PATH=/app-a/
+      - LETSENCRYPT_HOST=localhost
+    networks:
+      - shared-net
+networks:
+  shared-net:
+    external: true

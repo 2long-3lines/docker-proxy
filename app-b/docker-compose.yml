@@ -1,0 +1,12 @@
+services:
+  app-b:
+    image: traefik/whoami
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PATH=/app-b/
+      - LETSENCRYPT_HOST=localhost
+    networks:
+      - shared-net
+networks:
+  shared-net:
+    external: true
